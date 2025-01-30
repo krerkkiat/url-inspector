@@ -69,12 +69,13 @@ fn main() {
             if urls[i].starts_with("http://schemas.openxmlformats.org") {
                 continue;
             }
-            print!("Checking '{}' ... ", urls[i]);
-            let result = match check_url(urls[i]) {
-                Some(code) => code.to_string(),
-                None => "failed".to_string(),
+            let result: i32 = match check_url(urls[i]) {
+                Some(code) => code.into(),
+                None => -1,
             };
-            println!("{}", result);
+            if result != 200 {
+                println!("{} '{}' in {}", result, urls[i], file_name);
+            }
         }
     }
 }
